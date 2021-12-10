@@ -1,4 +1,4 @@
-s=(I,S={")":3,"]":57,"}":1197,">":25137},r=(s,p,v=s.replace(p,""))=>v==s?v:r(v,p),u=s=>r(s,/\{\}|\[\]|\<\>|\(\)/),e=s=>r(s,/[\{\[\<\(]$/),l=v=>I.split("\n").map(x=>u(x)).filter(x=>v^!!e(x)),m=(l,s=l.sort((x,y)=>x-y))=>s[s.length>>1])=>[l(0).reduce((s,x)=>s+S[[...e(x)].find(c=>c in S)],0),m(l(1).map(x=>[...x].reduceRight((s,c)=>s*5+"#([{<".indexOf(c),0)))]
+s=(I,S={")":3,"]":57,"}":1197,">":25137},r=(s,p,v=s.replace(p,""))=>v==s?v:r(v,p),e=s=>r(s,/[\{\[\<\(]$/),l=v=>r(I,/\{\}|\[\]|\<\>|\(\)/).split("\n").filter(x=>v^!!e(x)),m=(l,s=l.sort((x,y)=>x-y))=>s[s.length>>1])=>[l(0).reduce((s,x)=>s+S[[...e(x)].find(c=>c in S)],0),m(l(1).map(x=>[...x].reduceRight((s,c)=>s*5+"#([{<".indexOf(c),0)))]
 
 // explained:
 // - s is a function that takes the input string and returns both the answers in an array.
@@ -6,7 +6,9 @@ s=(I,S={")":3,"]":57,"}":1197,">":25137},r=(s,p,v=s.replace(p,""))=>v==s?v:r(v,p
 // - r keeps replacing a pattern in a string until the pattern is no longer present.
 // - s uses r to remove all immediately closed pairs until none are present: "{}", "[]", "<>", "()".
 // - e uses r to remove all trailing openers from the end of the string.
-// - l splits the input by line and filters out lines based on whether they have trailing openers (0 returns only lines without trailing openers, 1 returns only lines with them).
+// - l uses r to remove all immediately closed pairs until none are present: "{}", "[]", "<>", "()",
+//   splits the input by line and filters out lines based on whether they have trailing openers
+//   (0 returns only lines without trailing openers, 1 returns only lines with them).
 // - m returns the median of an odd-length array of numbers.
 // - the first output calls l(0), looks up the score of the first closer on each line from S and reduces the scores into a sum.
 // - the second output calls l(1), maps each line by reducing the characters in it right-to-left into sum * 5 + score_lookup[character], then uses m to get the median.
